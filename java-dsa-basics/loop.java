@@ -4,7 +4,7 @@ import javax.lang.model.util.ElementScanner14;
 
 public class loop {
 
-    public static void NumberOfDigits() {
+    static void NumberOfDigits() {
          // count number of digits
         System.out.println("Enter number");
         Scanner sc = new Scanner(System.in);
@@ -20,7 +20,7 @@ public class loop {
         System.out.println("Number of digit in given number "+m+" are: "+digit);
     }
 
-    public static int SumOfDigits(int n) {
+    static int SumOfDigits(int n) {
         int sum = 0;
 
         while(n>0) {
@@ -31,7 +31,7 @@ public class loop {
         return sum;
     }
 
-    public static int Reverse(int n) {
+    static int Reverse(int n) {
         int rev = 0;
          
         while(n > 0) {
@@ -42,7 +42,7 @@ public class loop {
         return rev;
     }
 
-    public static int sum(int n) {
+    static int sum(int n) {
         int ans = 0;
         
         for (int i = 1; i <= n; i++) {
@@ -57,7 +57,7 @@ public class loop {
         
     }
 
-    public static int factorial(int n) {
+    static int factorial(int n) {
         // int fact = 1;
         // for (int i = 1; i <= n; i++) {
         //     fact *= i;
@@ -72,7 +72,7 @@ public class loop {
         return n * factorial(n-1);
     }
 
-    public static int power(int a, int b) {
+    static int power(int a, int b) {
         // int pow = 1;
 
         // for (int i = 0; i < b; i++) {
