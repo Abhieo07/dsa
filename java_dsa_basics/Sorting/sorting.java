@@ -51,6 +51,20 @@ public class sorting {
         }
     }
 
+    static void insertionSort(int[] arr){ // wc: O(n2) best: O(n)
+        for (int i = 1; i < arr.length; i++) {
+            int j = i;
+            while(j > 0 && arr[j] < arr[j - 1]){
+                // swap arr[j],arr[j - 1]
+                arr[j] = arr[j] + arr[j - 1];
+                arr[j - 1] = arr[j] - arr[j - 1];
+                arr[j] = arr[j] - arr[j - 1];
+
+                j--;
+            }
+        }
+    }
+
     
 
     public static void main(String[] args) {
@@ -66,8 +80,11 @@ public class sorting {
         // System.out.println("Sorted using bubble sort");
         // bubbleSort(arr);
         // printArr(arr);
-        System.out.println("Sorted using Selection sort");
-        selectionSort(arr);
+        // System.out.println("Sorted using Selection sort");
+        // selectionSort(arr);
+        // printArr(arr);
+        System.out.println("Sorted using insertion sort");
+        insertionSort(arr);
         printArr(arr);
     }
 
