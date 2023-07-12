@@ -24,19 +24,35 @@ public class basic_prob {
     }
 
     // using selection sort
-    static void sortLex(String[] fruits){
-        for (int i = 0; i < fruits.length - 1; i++) {
-            int idx_min = i;
-            for (int j = i + 1; j < fruits.length; j++) {
-                if(fruits[j].compareTo(fruits[idx_min])<0){
-                    idx_min = j;
-                }
-            }
-            // swap fruits of idx_min and curr
-            String temp = fruits[i];
-            fruits[i] = fruits[idx_min];
-            fruits[idx_min] = temp;
+    static void sortLex(String[] fruits, int idx){
+        // for (int i = 0; i < fruits.length - 1; i++) {
+        //     int idx_min = i;
+        //     for (int j = i + 1; j < fruits.length; j++) {
+        //         if(fruits[j].compareTo(fruits[idx_min])<0){ // s1<s2
+        //             idx_min = j;
+        //         }
+        //     }
+        //     // swap fruits of idx_min and curr
+        //     String temp = fruits[i];
+        //     fruits[i] = fruits[idx_min];
+        //     fruits[idx_min] = temp;
+        // }
+
+        // using recurssion
+        
+        if(idx >= fruits.length) return;
+
+        int idx_min = idx;
+        for (int i = idx + 1; i < fruits.length; i++) {
+            if(fruits[i].compareTo(fruits[idx_min])<0) // s1<s2
+                idx_min = i; 
+                
         }
+        String temp = fruits[idx];
+        fruits[idx] = fruits[idx_min];
+        fruits[idx_min] = temp;
+
+        sortLex(fruits, idx + 1);
     }
 
     public static void main(String[] args) {
@@ -54,9 +70,9 @@ public class basic_prob {
         System.out.println("After sorting 0s to the end of the array");
         printArr(arr);
         String[] fruits = {"kiwi", "apple","papaya","mango"};
-        sortLex(fruits);
+        sortLex(fruits,0);
         for (String string : fruits) {
-            System.out.println(string+" ");
+            System.out.print(string+" ");
         }
 
     }
