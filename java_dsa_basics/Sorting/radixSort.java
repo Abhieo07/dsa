@@ -2,7 +2,7 @@ package Sorting;
 
 import java.util.Scanner;
 
-public class countSort {
+public class radixSort {
     static void printArr(int[] arr){
         for (int i : arr) {
             System.out.print(i+" ");
@@ -19,28 +19,11 @@ public class countSort {
         return max;
     }
 
-    static void basicCountSort(int[] arr){
-        // find the largest element of the array
-        int max = findMax(arr);
-        int count[] = new int[max + 1];
-        for (int i = 0; i < arr.length; i++) {
-            count[arr[i]]++;
-        }
-        int k = 0;
-        for (int i = 0; i < count.length; i++) {
-            for (int j = 0; j < count[i]; j++) {
-                arr[k++] = i;
-            }
-        }
-    }
-
-    //using prefixSum
-    static void countSortAl(int[] arr){
+    static void countSort(int[] arr, int place){
         int[] output = new int[arr.length];
-        int max = findMax(arr); // find the largest element of the array
-        int count[] = new int[max + 1];
+        int count[] = new int[10];
         for (int i = 0; i < arr.length; i++) { // make frequency array
-            count[arr[i]]++;
+            count[(arr[i]/place)%10]++;
         }
         // make prefix sum array of count array
         for (int i = 1; i < count.length; i++) {
@@ -48,13 +31,22 @@ public class countSort {
         }
         // find index of each element in a original array and put it in output array
         for (int i = arr.length - 1; i >= 0; i--) {
-            int idx = count[arr[i]] - 1;
+            int idx = count[(arr[i]/place)%10] - 1;
             output[idx] = arr[i];
-            count[arr[i]]--;
+            count[(arr[i]/place)%10]--;
         }
         // copy all elements of output to original array
         for (int i = 0; i < output.length; i++) {
             arr[i] = output[i];
+        }
+    }
+
+    static void radixSortAl(int[] arr){
+        int max = findMax(arr);
+
+        // aplly counting sort to sort elements based on place value
+        for (int place = 1; max/place > 0; place*=10) {
+            countSort(arr, place);
         }
     }
 
@@ -67,10 +59,10 @@ public class countSort {
         for (int i = 0; i < n; i++) {
             arr[i] = sc.nextInt();
         }
-        // basicCountSort(arr);
-        countSortAl(arr);
+        radixSortAl(arr);
         System.out.println("After sorting: ");
         printArr(arr);
         
     }
+
 }
