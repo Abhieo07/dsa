@@ -32,6 +32,19 @@ public class move {
         return st;
     }
 
+    static Stack<Integer> removeBottom(Stack<Integer> st){
+        Stack<Integer> rt = new Stack<>();
+        while (st.size() > 1) {
+            rt.push(st.pop());
+        }
+        st.pop();
+        while (rt.size() > 0) {
+            st.push(rt.pop());
+        }
+
+        return st;
+    }
+
     static Stack<Integer> insertAt(Stack<Integer> st){
         Stack<Integer> rt = new Stack<>();
         Scanner sc = new Scanner(System.in);
@@ -86,6 +99,40 @@ public class move {
         
     }
 
+    static Stack<Integer> reverse(Stack<Integer> st){
+        Stack<Integer> rt = new Stack<>();
+        while (st.size()>0) {
+            rt.push(st.pop());
+        }
+        Stack<Integer> qt = new Stack<>();
+        while (rt.size()>0) {
+            qt.push(rt.pop());
+        }
+        while (qt.size()>0) {
+            st.push(qt.pop());
+        }
+        return st;
+    }
+    
+    static Stack<Integer> reverseR(Stack<Integer> st){
+        if(st.size()==1) return st;
+        int top = st.pop();
+        Stack<Integer> rev = reverseR(st);
+        insertBottomR(st, top);
+        return rev;
+    }
+
+    static Stack<Integer> insertBottomR(Stack<Integer> st, int val){
+        if(st.size() == 0) {
+            st.push(val);
+            return st;
+        }
+        int top = st.pop();
+        Stack<Integer> bt = insertBottomR(st, val);
+        st.push(top);
+        return bt;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
@@ -96,10 +143,11 @@ public class move {
         for (int index = 0; index < n; index++) {
             st.push(sc.nextInt());
         }
-        displayR(st);
+        // displayR(st);
         // copy(st);
-        // System.out.println(insertBottom(st, 13));
-        System.out.println(insertAt(st));
+        // System.out.println(insertBottomR(st, 13));
+        // System.out.println(insertAt(st));
+        System.out.println("Reverse: "+reverseR(st));
         
     }
     
