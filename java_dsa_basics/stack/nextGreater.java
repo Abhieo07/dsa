@@ -37,9 +37,30 @@ public class nextGreater {
         return res;
     }
     
+    static int[] nextGreaterEle(int[] arr){
+        int n = arr.length;
+        int[] res = new int[n];
+        Stack<Integer> st = new Stack<>();
+
+        
+        for (int i = 0; i < n; i++) {
+            st.push(i);
+            if(arr[i] > arr[st.peek()])
+                res[st.peek()] = arr[i];
+            else
+                arr[i] = -1;
+            while (st.size() > 0 && arr[i] > arr[st.peek()]) {
+                res[st.peek()] = st.pop();
+            }
+            
+        }
+
+        return res;
+    }
+
     public static void main(String[] args) {
-        int[] arr = {1,3,2,1,8,6,3,4};
-        int[] res = nextGreaterElements2(arr);
+        int[] arr = {1,5,3,2,1,6,3,4};
+        int[] res = nextGreaterEle(arr);
         for (int i : res) {
             System.out.print(i+" ");
         }
