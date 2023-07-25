@@ -34,6 +34,7 @@ public class minStack {
     }
 }
 
+// approach 2
 class MinStack {
     Stack<Long> st = new Stack<>();
     long min = -1;
