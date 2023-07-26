@@ -43,6 +43,39 @@ public class reverse {
         return prev;
     }
 
+    static Node irevList2(Node head, int left, int right){
+        Node l = head;
+        Node r = head;
+        int c = 0,x=0;
+        Node curr = head;
+        while (curr != null) {
+            if(c+1 == left) l = curr;
+            c++;
+            curr =curr.next;
+        }
+        curr = head;
+        while (curr != null) {
+            if(c-right == x+1) r = curr;
+            x++;
+            curr =curr.next;
+        }
+        while (left < right) {
+            
+        }
+
+        
+        Node prev = null;
+        Node after = null;
+        while(curr != null){
+            after = curr.next; //after ko curr k next node
+            curr.next = prev; // curr ko prev
+            prev = curr; // prev ko curr
+            curr = after; // curr ko aage
+
+        }
+        return prev;
+    }
+
     static boolean isPallindrome(Node head){
         // calculate left middle of list
         Node slow = head;
