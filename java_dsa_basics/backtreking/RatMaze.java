@@ -4,7 +4,7 @@ public class RatMaze {
     public static void main(String[] args) {
         int rows = 3, cols = 3;
 
-        int count = maze(1,1,rows,cols);
+        int count = maze(0,0,rows-1,cols-1);
         System.out.println(count);
         path(0,0,rows-1,cols-1,"");
     }
