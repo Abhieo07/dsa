@@ -1,4 +1,4 @@
-package java_dsa_basics.backtreking;
+package backtreking;
 
 public class RatMazeOpt {
     public static void main(String[] args) {
