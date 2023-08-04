@@ -2,17 +2,17 @@ package backtreking;
 
 public class K_Knights {
     public static void main(String[] args) {
-        int n = 3;
+        int n = 2;
         char[][] board = new char[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 board[i][j] = '.';
             }
         }
-        k_knights(board,0);
+        k_knights(board,0,0);
     }
 
-    private static void k_knights(char[][] board, int row) {
+    private static void k_knights(char[][] board, int row, int col) {
         int n = board.length;
         if(row == n){
             for (int i = 0; i < n; i++) {
@@ -24,19 +24,19 @@ public class K_Knights {
             System.out.println();
             return;
         }
-        for (int j = 0; j < n; j++) {
-            if(isSafe(board,row,j)) {
-                board[row][j] = 'K';
-                k_knights(board, row+1);
-                board[row][j] = '.'; //backtracing
-            }
+        else if(isSafe(board, row, col)){
+            board[row][col] = 'K';
+            if(col != n-1) k_knights(board, row, col + 1);
+            else k_knights(board, row + 1, 0);
+            board[row][col] = '.'; //backtracing
         }
+        if(col != n - 1) k_knights(board, row, col + 1);
+        else k_knights(board, row + 1, 0);
+
     }
 
     private static boolean isSafe(char[][] grid, int row, int col) {
         int n = grid.length;
-        // base case
-        // if(grid[row][col] == n*n - 1) return true;
         int i,j;
         // 2 up 1 right
         i = row - 2;
