@@ -23,11 +23,26 @@ public class sizeMaxSum {
         return lSize + rSize + 1;
     }
 
+    static int product(Node root){
+        if(root == null) return 1;
+        if(root.left == null && root.right == null) return root.val;
+        int lproduct = product(root.left);
+        int rproduct = product(root.right);
+        return root.val * lproduct * rproduct;
+    }
+
     static int Max(Node root){
         if(root == null) return Integer.MIN_VALUE;
         int lmax = Max(root.left);
         int rmax = Max(root.right);
         return Math.max(root.val, Math.max(lmax, rmax));
+    }
+
+    static int Min(Node root){
+        if(root == null) return Integer.MAX_VALUE;
+        int lmin = Min(root.left);
+        int rmin = Min(root.right);
+        return Math.min(root.val, Math.min(lmin, rmin));
     }
 
     static int sum(Node root){
@@ -54,7 +69,7 @@ public class sizeMaxSum {
         a.left = c;
         a.right = d;
         Node e = new Node(6);
-        Node f = new Node(7);
+        Node f = new Node(8);
         b.left = e;
         b.right = f;
         Node g = new Node(8);
@@ -67,6 +82,8 @@ public class sizeMaxSum {
         // System.out.println(sum(root));
         // System.out.println(Max(root));
         System.out.println(height(root));
+        System.out.println(Min(root));
+        System.out.println(product(root));
 
     }
 }
