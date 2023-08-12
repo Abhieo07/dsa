@@ -54,7 +54,11 @@ public class deleteNode {
         String[] arr = {"50","20","60","17","34","55","89","10","","28","","","","70","","","14"};
         Node root = constructBFS(arr);
         preorder(root);
+<<<<<<< HEAD
         int target = 20;
+=======
+        int target = 28;
+>>>>>>> eaf18e4d924c5b860408b4c9e00002a4b6561292
         delete(root, target);
         System.out.println("\nAfter deletion");
         preorder(root);
@@ -86,6 +90,7 @@ public class deleteNode {
                 else if(l.left == null || l.right == null) // 1 child
                     if(l.left != null) root.left = l.left;
                     else root.left = l.right;
+<<<<<<< HEAD
                 else{ // 2 child
                     Node curr = l;
                     Node pred = l.left;
@@ -96,6 +101,8 @@ public class deleteNode {
                     root.left = pred;
                     
                 }
+=======
+>>>>>>> eaf18e4d924c5b860408b4c9e00002a4b6561292
             }
             else delete(root.left, target);
         }
@@ -107,6 +114,7 @@ public class deleteNode {
                 else if(l.left == null || l.right == null) // 1 child
                     if(l.left != null) root.right = l.left;
                     else root.right = l.right;
+<<<<<<< HEAD
                 else{ // 2 child
                     Node curr = l;
                     Node pred = l.left;
@@ -117,6 +125,8 @@ public class deleteNode {
                     root.right = pred;
                     
                 }
+=======
+>>>>>>> eaf18e4d924c5b860408b4c9e00002a4b6561292
             }
             else delete(root.right, target);
         }
