@@ -23,10 +23,10 @@ public class hamming {
         int[][] table = new int[data.length][r];
         createTable(table);
         // counting parity of each family R4,R3,R2,R1
-        int parityR1 = parityCheck(table,r-1);
-        int parityR2 = parityCheck(table,r-2);
-        int parityR4 = parityCheck(table,r-3);
-        int parityR8 = parityCheck(table,r-4);
+        int parityR1 = parityCheck2(table,dataframe,r-1);
+        int parityR2 = parityCheck2(table,dataframe,r-2);
+        int parityR4 = parityCheck2(table,dataframe,r-3);
+        int parityR8 = parityCheck2(table,dataframe,r-4);
         System.out.println("\nParity "+parityR1+","+parityR2+","+parityR4+","+parityR8);
 
         // replacing redundant by parity of redundant
@@ -60,6 +60,33 @@ public class hamming {
         int count=0;
         for (int i = 0; i < table.length; i++) {
             if(table[i][r] == 1)count++;
+        }
+        return count%2;
+    }
+
+    private static int parityCheck2(int[][] table, String[] dataFrame, int r) {
+        
+        int [] msg = new int[dataFrame.length-1];
+        for (int i = 0; i < msg.length; i++) {
+            if(dataFrame[i] == null) continue;
+            if(dataFrame[i].equals("0") || dataFrame[i].equals("1"))
+                msg[i] = Integer.parseInt(dataFrame[i]);
+            else msg[i] = -1;
+        }
+        System.out.println();
+
+        List<Integer> fam = new ArrayList<>();
+        for (int i = 0; i < table.length; i++) {
+            if(table[i][r] == 1)
+                fam.add(i);
+        }
+        int count=0;
+        int x = 0;
+        for (int i = 0; i < msg.length; i++) {
+            if(x < fam.size() && msg[fam.get(x)] == 1) {
+                x++;
+                count++;
+            }
         }
         return count%2;
     }
@@ -122,34 +149,60 @@ public class hamming {
         System.out.println();
         System.out.println("receiving side: ");
         System.out.println();
+        // without error
+        System.out.println("Without error");
+        receiverSide(senderSideMess);
+
+        // with error
+        int x = (int)((senderSideMess.length-1)*Math.random());
+        System.out.println(senderSideMess.length-x-1);
+        if(senderSideMess[x].equals("0")){
+            senderSideMess[x] = "1";
+        }
+        else senderSideMess[x] = "0";
+        System.out.println("With error : ");
         receiverSide(senderSideMess);
     }
 
     private static void receiverSide(String[] senderSideMess) {
         List<Integer> received = convertToList(senderSideMess);
-        int m = received.size();
-        int r = redundant(m, 0);
-        System.out.println("redundant: " +r);
-        String[] data = new String[m+r+1]; //1 base indexing
-        String[] dataframe = filldata(data,received,r);
-        for (int i = 0; i < dataframe.length-1; i++) {
-            System.out.print(dataframe[i]+" ");
-        }
-        int[][] table = new int[data.length][r];
-        createTable(table);
+        System.out.println("received: "+ received);
         
-        int parityR1 = parityCheck(table,r-1);
-        int parityR2 = parityCheck(table,r-2);
-        int parityR4 = parityCheck(table,r-3);
-        int parityR8 = parityCheck(table,r-4);
+        List<Integer> redundantbits = new ArrayList<>();
+        int t = 0;
+        // getting redundand bit value
+        for (int i = 1; i <= received.size(); i++) {
+            if(i == Math.pow(2,t)){
+                // System.out.println(i+"th value: "+ received.get(received.size()-i));
+                redundantbits.add(received.get(received.size()-i));
+                t++;
+            }
+        }
+        System.out.println("Parity of received array : "+ redundantbits);
+        int m = redundantbits.size();
+        int[][] table2 = new int[received.size()+1][m];
+        createTable(table2);
+        // for (int i = 1; i < table.length; i++) {
+        //     for (int j = 0; j < table[i].length; j++) {
+        //         System.out.print(table[i][j]+" ");
+        //     }
+        //     System.out.println();
+        // }
+        // counting parity of each family R4,R3,R2,R1
+        int parityR1 = parityCheck2(table2,senderSideMess,m-1);
+        parityR1 = (parityR1 + redundantbits.get(0))%2;
+        int parityR2 = parityCheck2(table2,senderSideMess,m-2);
+        parityR2 = (parityR2 + redundantbits.get(1))%2;
+        int parityR4 = parityCheck2(table2,senderSideMess,m-3);
+        parityR4 = (parityR4 + redundantbits.get(2))%2;
+        int parityR8 = parityCheck2(table2,senderSideMess,m-4);
+        parityR8 = (parityR8 + redundantbits.get(3))%2;
         System.out.println("\nParity "+parityR1+","+parityR2+","+parityR4+","+parityR8);
 
-        if(parityR1 == 1 || parityR2 == 1 || parityR4 == 1 || parityR8 == 1){
-            System.out.println("Error");
-            return;
-        }
-        else{
-            System.out.println("No error");
-        }
+        if(parityR1 == 1 ) System.out.println("Error at R1");
+        else if(parityR2 == 1) System.out.println("Error at R2");
+        else if(parityR4 == 1) System.out.println("Error at R4");
+        else if(parityR8 == 1) System.out.println("Error at R8");
+        else System.out.println("No error: ");
     }
 }

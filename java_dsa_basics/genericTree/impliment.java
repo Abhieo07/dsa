@@ -5,7 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
-import LinkedList.reverse;
+// import LinkedList.reverse;
 
 
 class impliment{
@@ -125,7 +125,7 @@ class impliment{
 
         for (int i = 0; i < n; i++) {
             mirrorTree(root.child.get(i));
-            reverse(root.child);
+            // reverse(root.child);
         }
     }
 
